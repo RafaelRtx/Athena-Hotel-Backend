@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Guest{
+  id               Int          @id @default(autoincrement())
+  name             String
+  password         String
+  email            String       @unique
+  bookings         Bookings[]   @relation("guest")
+  created_at       DateTime     @default(now())
+}
+
+model Room{
+  id               Int          @id @default(autoincrement())
+  quantity         Int
+  number           Int
+  price            Int 
+  availability     Boolean
+  bookings         Bookings[]   @relation("room")
+  roomType         RoomType 
+}
+
+model Bookings{
+  id               Int          @id @default(autoincrement())
+  created_at       DateTime     @default(now())
+  date_check_in    DateTime   
+  date_check_out   DateTime   
+  number_of_rooms  Int
+  number_of_guests Int
+  guest_id         Int          @unique
+  guest            Guest        @relation("guest", fields: [guest_id], references: [id])
+  room_id          Int
+  room             Room         @relation("room", fields: [room_id], references: [id]) 
+}
+
+enum RoomType{
+  SIMPLE_SINGLE
+  PREMIUM_SINGLE
+  SIMPLE_COUPLE
+  PREMIUM_COUPLE
+}
