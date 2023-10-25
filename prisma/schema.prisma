@@ -32,11 +32,11 @@ model Room{
 model Bookings{
   id               Int          @id @default(autoincrement())
   created_at       DateTime     @default(now())
-  date_check_in    DateTime   
-  date_check_out   DateTime   
+  date_check_in    DateTime
+  date_check_out   DateTime
   number_of_rooms  Int
   number_of_guests Int
-  guest_id         Int          @unique
+  guest_id         Int          
   guest            Guest        @relation("guest", fields: [guest_id], references: [id])
   room_id          Int
   room             Room         @relation("room", fields: [room_id], references: [id]) 
