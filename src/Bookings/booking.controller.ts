@@ -1,6 +1,7 @@
-import {Controller,Get, Query, HttpException} from '@nestjs/common'
+import {Controller,Get, Query, HttpException, Body, Post, UnauthorizedException} from '@nestjs/common'
 import { BookingService } from './booking.service';
-import { BookingResponseDto } from './dto/booking.dto';
+import { BookingResponseDto, CreateBookingDto } from './dto/booking.dto';
+import { Guest, GuestInfo } from 'src/Guest/Decorators/guest.decorator';
 
 @Controller('booking')
 export class BookingController{
@@ -22,4 +23,16 @@ export class BookingController{
    }
     return this.bookingService.getBookings(filters)
   }
+
+  @Post()
+  createBooking(
+    @Body() body: CreateBookingDto,
+    @Guest() guest: GuestInfo
+  ){
+    if (!guest) throw new UnauthorizedException()
+
+    return this.bookingService.createBooking(body , guest.id)
+  }
+
+
 }

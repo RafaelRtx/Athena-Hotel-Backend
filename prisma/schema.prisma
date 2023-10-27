@@ -15,7 +15,7 @@ model Guest{
   name             String
   password         String
   email            String       @unique
-  bookings         Bookings[]   @relation("guest")
+  bookings         Bookings[]
   created_at       DateTime     @default(now())
 }
 
@@ -25,7 +25,7 @@ model Room{
   number           Int
   price            Int 
   availability     Boolean
-  bookings         Bookings[]   @relation("room")
+  bookings         Bookings[]   
   roomType         RoomType 
 }
 
@@ -37,9 +37,9 @@ model Bookings{
   number_of_rooms  Int
   number_of_guests Int
   guest_id         Int          
-  guest            Guest        @relation("guest", fields: [guest_id], references: [id])
+  guest            Guest        @relation(fields: [guest_id], references: [id])
   room_id          Int
-  room             Room         @relation("room", fields: [room_id], references: [id]) 
+  room             Room         @relation(fields: [room_id], references: [id]) 
 }
 
 enum RoomType{

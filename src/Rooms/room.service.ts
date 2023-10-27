@@ -25,6 +25,6 @@ export class RoomService{
         availability:true
       }
     })
-    return
+    return rooms
   }
 }
