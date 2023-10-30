@@ -50,12 +50,11 @@ export class BookingService{
 
   async createBooking({checkinDate, checkoutDate, guestNumber, rooms, roomId}:CreateBookingParams, guestId:number){
 
-    const availability = await this.getRoomAvailability(roomId)
+    const {availability, quantity} = await this.getRoomAvailabilityData(roomId)
 
     if (availability !== true){
       throw new HttpException('Sorry, this room is not available', 400)
     }
-
 
     const booking = await this.prismaService.bookings.create({
       data: {
@@ -67,20 +66,40 @@ export class BookingService{
         guest_id: guestId,
       }
     })
+
+    this.updateRoomAvailability(quantity, roomId)
+
     return booking
   }
 
-  async getRoomAvailability(id: number){
+  async getRoomAvailabilityData(id: number){
     const roomAvailability = await this.prismaService.room.findUnique({
       where:{
         id
       },
       select:{
-        availability:true
+        availability:true,
+        quantity:true
       },
     })
 
-    return roomAvailability.availability
+    return roomAvailability
   }
+
+  async updateRoomAvailability(quantity:number, room_id:number){
+
+    const isAvailable = (quantity == 1) ? false : true
+
+    return await this.prismaService.room.update({
+      where:{
+        id:room_id
+      },
+      data:{
+        quantity:quantity == 0 ? quantity: quantity-1,
+        availability: isAvailable
+      }
+    })
+  }
+
 }
 
