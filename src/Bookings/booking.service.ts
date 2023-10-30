@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { HttpException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/Prisma/prisma.service";
 import { BookingResponseDto } from "./dto/booking.dto";
 
@@ -49,6 +49,14 @@ export class BookingService{
   }
 
   async createBooking({checkinDate, checkoutDate, guestNumber, rooms, roomId}:CreateBookingParams, guestId:number){
+
+    const availability = await this.getRoomAvailability(roomId)
+
+    if (availability !== true){
+      throw new HttpException('Sorry, this room is not available', 400)
+    }
+
+
     const booking = await this.prismaService.bookings.create({
       data: {
         date_check_in:new Date(checkinDate).toISOString(),
@@ -59,8 +67,20 @@ export class BookingService{
         guest_id: guestId,
       }
     })
-    console.log(guestId)
     return booking
+  }
+
+  async getRoomAvailability(id: number){
+    const roomAvailability = await this.prismaService.room.findUnique({
+      where:{
+        id
+      },
+      select:{
+        availability:true
+      },
+    })
+
+    return roomAvailability.availability
   }
 }
 

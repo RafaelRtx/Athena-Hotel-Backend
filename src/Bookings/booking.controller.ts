@@ -9,7 +9,7 @@ export class BookingController{
 
   @Get()
   getBookings(
-    @Query('checkinDate') checkinDate: string, //Esta lógica deveria estar no controller de Bookings
+    @Query('checkinDate') checkinDate: string, 
     @Query('checkoutDate') checkoutDate: string,
   ): Promise<BookingResponseDto[]>{
 
