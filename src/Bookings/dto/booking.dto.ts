@@ -1,7 +1,8 @@
 import { IsDateString, IsNotEmpty, IsNumber, IsPositive, IsString, isNotEmpty } from "class-validator";
 
 export class BookingResponseDto{
-  id: number                        
+  id: number  
+  room_id: number                      
 }
 
 export class CreateBookingDto{

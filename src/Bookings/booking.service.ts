@@ -3,7 +3,6 @@ import { PrismaService } from "src/Prisma/prisma.service";
 import { BookingResponseDto } from "./dto/booking.dto";
 
 
-
 type GetRoomsParams = {
   dateStart:string,
   dateEnd:string
@@ -18,15 +17,15 @@ type CreateBookingParams = {
 }
 
 const bookingSelect={
-  id: true,              
+  id: true, 
+  room_id:true             
 }
-
 
 @Injectable()
 export class BookingService{
   constructor (private readonly prismaService: PrismaService){}
 
-  async getBookings({dateStart,dateEnd}: GetRoomsParams): Promise<BookingResponseDto[]>{
+  async getBookings({dateStart,dateEnd}: GetRoomsParams){
     const bookings = await this.prismaService.bookings.findMany({
       select:{
         ...bookingSelect
@@ -41,20 +40,14 @@ export class BookingService{
       }
     })
 
+
     if (!bookings.length){
-      throw new NotFoundException()
+      throw new NotFoundException('No results found')
     }
-    
     return bookings
   }
 
   async createBooking({checkinDate, checkoutDate, guestNumber, rooms, roomId}:CreateBookingParams, guestId:number){
-
-    const {availability, quantity} = await this.getRoomAvailabilityData(roomId)
-
-    if (availability !== true){
-      throw new HttpException('Sorry, this room is not available', 400)
-    }
 
     const booking = await this.prismaService.bookings.create({
       data: {
@@ -67,39 +60,25 @@ export class BookingService{
       }
     })
 
-    this.updateRoomAvailability(quantity, roomId)
+    
 
     return booking
   }
 
   async getRoomAvailabilityData(id: number){
-    const roomAvailability = await this.prismaService.room.findUnique({
+    const roomAvailabilityData = await this.prismaService.room.findUnique({
       where:{
         id
       },
       select:{
-        availability:true,
         quantity:true
       },
     })
 
-    return roomAvailability
+    return roomAvailabilityData
   }
 
-  async updateRoomAvailability(quantity:number, room_id:number){
 
-    const isAvailable = (quantity == 1) ? false : true
-
-    return await this.prismaService.room.update({
-      where:{
-        id:room_id
-      },
-      data:{
-        quantity:quantity == 0 ? quantity: quantity-1,
-        availability: isAvailable
-      }
-    })
-  }
 
 }
 

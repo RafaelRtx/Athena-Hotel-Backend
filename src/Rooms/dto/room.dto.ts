@@ -7,5 +7,8 @@ export class RoomResponseDto{
   price: number            
   availability: boolean     
   bookings: Bookings[]         
-  roomType: RoomType         
+  roomType: RoomType
+   
 }
+
+export class a{}
