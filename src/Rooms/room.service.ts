@@ -2,6 +2,11 @@ import { HttpException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/Prisma/prisma.service";
 import { RoomResponseDto } from "./dto/room.dto";
 
+type GetRoomsParams = {
+  dateStart:string,
+  dateEnd:string
+}
+
 const roomSelect = {
   id:true,             
   quantity:true,       
@@ -22,7 +27,7 @@ const bookingSelect = {
 export class RoomService{
   constructor (private readonly prismaService: PrismaService){}
 
-  async getRooms({dateStart, dateEnd}) : Promise<RoomResponseDto[]>{
+  async getRooms({dateStart, dateEnd} : GetRoomsParams) : Promise<RoomResponseDto[]>{
     
 
     const bookingsInSpecificDate = await this.getBookingsInSpecificDate(dateStart, dateEnd)
@@ -45,7 +50,6 @@ export class RoomService{
 
       let i = 0
       rooms.filter((room)=>{
-        console.log(bookingsInSpecificDate[1].length)
         
         if (room.id === bookingsInSpecificDate[i][0].room_id){
           const isFull = bookingsInSpecificDate[i].length < room.quantity ? false : true
@@ -64,13 +68,16 @@ export class RoomService{
       
       })
 
+      if (availableRooms.length == 0){
+        throw new NotFoundException('Sorry there are no rooms available for selected Date.')
+      }
 
       return availableRooms
 
     }
   }
 
-  async getBookingsInSpecificDate(dateStart, dateEnd){
+  async getBookingsInSpecificDate(dateStart: string, dateEnd: string){
     const bookings = await this.prismaService.bookings.findMany({
       select:{
         ...bookingSelect
@@ -98,16 +105,26 @@ export class RoomService{
     })
     arrayBookings.push(filter)
     })
-
-    
-    
     console.log(arrayBookings)
 
     return arrayBookings
 
   }
 
-  async getRoomById(){
+  async getRoomById(id:number){
+    const home  = await this.prismaService.room.findUnique({
+      where:{
+        id,
+      },
+      select:{
+        ...roomSelect
+      }
+    })
 
+    if (!home){
+      throw new NotFoundException()
+    }
+
+    return home
   }
 }

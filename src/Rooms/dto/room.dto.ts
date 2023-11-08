@@ -1,14 +1,25 @@
 import {Bookings, RoomType} from '@prisma/client'
+import { IsArray, IsEnum, IsNumber } from 'class-validator'
 
 export class RoomResponseDto{
-  id: number               
-  quantity: number         
+  @IsNumber()
+  id: number      
+  
+  @IsNumber()
+  quantity: number  
+  
+  @IsNumber()
   number: number           
+
+  @IsNumber()
   price: number            
-  availability: boolean     
-  bookings: Bookings[]         
+  availability: boolean    
+  
+  @IsArray()
+  bookings: Bookings[]    
+  
+  @IsEnum(RoomType)
   roomType: RoomType
    
 }
 
-export class a{}

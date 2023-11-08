@@ -28,7 +28,7 @@ export class RoomController{
 
   @Get(':id')
   getRoomById(@Param("id", ParseIntPipe) id:number){
-    return this.roomService.getRoomById
+    return this.roomService.getRoomById(id)
   }
 }
 
