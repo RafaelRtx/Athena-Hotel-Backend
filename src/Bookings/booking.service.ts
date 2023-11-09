@@ -49,11 +49,9 @@ export class BookingService{
 
   async createBooking({checkinDate, checkoutDate, guestNumber, rooms, roomId,}:CreateBookingParams, guestId:number){
 
-    const roomData = await this.getRoomAvailabilityData(roomId, checkinDate, checkoutDate)
-    console.log(roomData)
+    const {bookings, quantity} = await this.getRoomAvailabilityData(roomId, checkinDate, checkoutDate)
 
-    console.log(roomData.bookings.length)
-    if (roomData.bookings.length < roomData.quantity){
+    if (bookings.length < quantity){
       const booking = await this.prismaService.bookings.create({
         data: {
           date_check_in:new Date(checkinDate).toISOString(),
@@ -64,11 +62,11 @@ export class BookingService{
           guest_id: guestId,
         }
       })
-
+ 
       return booking
     }
 
-    throw new HttpException('Sorry this room is full.', 401)
+    throw new HttpException('Sorry this room is full.', 403)
   }
 
   async getRoomAvailabilityData(id: number, dateStart:string, dateEnd:string){

@@ -31,3 +31,12 @@ export class SigninDto{
   @MinLength(8)
   password:string
 }
+
+export class updateUserDto{
+  @IsString()
+  name: string
+
+  @IsEmail()
+  @IsString()
+  email: string
+}

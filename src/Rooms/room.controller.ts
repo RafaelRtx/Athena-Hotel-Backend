@@ -9,7 +9,7 @@ export class RoomController{
   constructor (private readonly roomService: RoomService){}
 
   @Get()
-  getBookings(
+  getRooms(
     @Query('checkinDate') checkinDate: string, 
     @Query('checkoutDate') checkoutDate: string,
   ): Promise<RoomResponseDto[]>{
