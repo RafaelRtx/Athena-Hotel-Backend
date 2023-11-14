@@ -16,9 +16,7 @@ CREATE TABLE "Guest" (
 CREATE TABLE "Room" (
     "id" SERIAL NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "number" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
-    "availability" BOOLEAN NOT NULL,
     "roomType" "RoomType" NOT NULL,
 
     CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
@@ -30,7 +28,6 @@ CREATE TABLE "Bookings" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "date_check_in" TIMESTAMP(3) NOT NULL,
     "date_check_out" TIMESTAMP(3) NOT NULL,
-    "number_of_rooms" INTEGER NOT NULL,
     "number_of_guests" INTEGER NOT NULL,
     "guest_id" INTEGER NOT NULL,
     "room_id" INTEGER NOT NULL,

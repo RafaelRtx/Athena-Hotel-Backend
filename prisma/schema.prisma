@@ -22,9 +22,7 @@ model Guest{
 model Room{
   id               Int          @id @default(autoincrement())
   quantity         Int
-  number           Int
   price            Int 
-  availability     Boolean
   bookings         Bookings[]   
   roomType         RoomType 
 }
@@ -34,7 +32,6 @@ model Bookings{
   created_at       DateTime     @default(now())
   date_check_in    DateTime
   date_check_out   DateTime
-  number_of_rooms  Int
   number_of_guests Int
   guest_id         Int          
   guest            Guest        @relation(fields: [guest_id], references: [id])

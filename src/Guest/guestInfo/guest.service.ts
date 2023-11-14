@@ -1,10 +1,10 @@
-import { Injectable, ConflictException, HttpException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/Prisma/prisma.service";
 
 
-type updateUserInfoParams = {
-  name: string,
-  email: string,
+type UpdateUserInfoParams = {
+  name?: string,
+  email?: string,
 }
 
 const guestInfoSelect = {
@@ -41,6 +41,7 @@ export class GuestService{
   }
 
   async getGuestReservations(id:number){
+    console.log(id)
     const guestBookings = await this.prismaService.guest.findUnique({
       where:{
         id,
@@ -50,10 +51,14 @@ export class GuestService{
       }
     })
 
+    if (guestBookings.bookings.length == 0){
+      throw new NotFoundException('No bookings found')
+    }
+
     return guestBookings
   }
 
-  async updateUserInfo({name, email}: updateUserInfoParams, guestId: number){
+  async updateUserInfo({name, email}: UpdateUserInfoParams, guestId: number){
     await this.prismaService.guest.update({
       where:{
         id:guestId
@@ -75,7 +80,7 @@ export class GuestService{
         guest_id : guestId
       }
     })
-    
+
     await this.prismaService.guest.delete({
       where:{
         id:guestId
@@ -84,5 +89,7 @@ export class GuestService{
         ...deleteGuestSelect
       }
     })
+
+    return "Account deleted succesessfully"
   }
 }

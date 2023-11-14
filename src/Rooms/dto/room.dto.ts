@@ -6,14 +6,10 @@ export class RoomResponseDto{
   id: number      
   
   @IsNumber()
-  quantity: number  
-  
-  @IsNumber()
-  number: number           
+  quantity: number     
 
   @IsNumber()
-  price: number            
-  availability: boolean    
+  price: number              
   
   @IsArray()
   bookings: Bookings[]    

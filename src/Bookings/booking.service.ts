@@ -1,6 +1,6 @@
 import { HttpException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/Prisma/prisma.service";
-import { BookingResponseDto } from "./dto/booking.dto";
+
 
 
 type GetRoomsParams = {
@@ -12,7 +12,6 @@ type CreateBookingParams = {
   checkinDate:string,
   checkoutDate:string,
   guestNumber: number,
-  rooms:number,
   roomId:number,
 }
 
@@ -47,7 +46,8 @@ export class BookingService{
     return bookings
   }
 
-  async createBooking({checkinDate, checkoutDate, guestNumber, rooms, roomId,}:CreateBookingParams, guestId:number){
+  async createBooking({checkinDate, checkoutDate, guestNumber, roomId,}:CreateBookingParams, guestId:number){
+    console.log(roomId)
 
     const {bookings, quantity} = await this.getRoomAvailabilityData(roomId, checkinDate, checkoutDate)
 
@@ -57,7 +57,6 @@ export class BookingService{
           date_check_in:new Date(checkinDate).toISOString(),
           date_check_out:new Date(checkoutDate).toISOString(),
           number_of_guests:guestNumber,
-          number_of_rooms:rooms,
           room_id:roomId,
           guest_id: guestId,
         }

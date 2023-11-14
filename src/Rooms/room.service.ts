@@ -9,10 +9,8 @@ type GetRoomsParams = {
 
 const roomSelect = {
   id:true,             
-  quantity:true,       
-  number:true,          
-  price:true ,           
-  availability:true,    
+  quantity:true,               
+  price:true ,             
   bookings:true,         
   roomType:true, 
 }
