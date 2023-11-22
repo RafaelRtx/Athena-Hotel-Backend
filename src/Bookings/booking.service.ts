@@ -2,7 +2,6 @@ import { HttpException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/Prisma/prisma.service";
 
 
-
 type GetRoomsParams = {
   dateStart:string,
   dateEnd:string
@@ -15,7 +14,7 @@ type CreateBookingParams = {
   roomId:number,
 }
 
-const bookingSelect={
+export const bookingSelect={
   id: true, 
   room_id:true             
 }
@@ -47,25 +46,23 @@ export class BookingService{
   }
 
   async createBooking({checkinDate, checkoutDate, guestNumber, roomId,}:CreateBookingParams, guestId:number){
-    console.log(roomId)
 
     const {bookings, quantity} = await this.getRoomAvailabilityData(roomId, checkinDate, checkoutDate)
+    const isFull = bookings.length == quantity
 
-    if (bookings.length < quantity){
-      const booking = await this.prismaService.bookings.create({
-        data: {
-          date_check_in:new Date(checkinDate).toISOString(),
-          date_check_out:new Date(checkoutDate).toISOString(),
-          number_of_guests:guestNumber,
-          room_id:roomId,
-          guest_id: guestId,
-        }
-      })
- 
-      return booking
+    if (isFull == true){
+      throw new HttpException('Sorry this room is full.', 403) // TODO: change this to a more coherent http exception
     }
 
-    throw new HttpException('Sorry this room is full.', 403)
+    return await this.prismaService.bookings.create({
+      data: {
+        date_check_in:new Date(checkinDate).toISOString(),
+        date_check_out:new Date(checkoutDate).toISOString(),
+        number_of_guests:guestNumber,
+        room_id:roomId,
+        guest_id: guestId,
+      }
+    })
   }
 
   async getRoomAvailabilityData(id: number, dateStart:string, dateEnd:string){

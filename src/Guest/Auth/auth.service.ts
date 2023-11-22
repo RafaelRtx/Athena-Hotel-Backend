@@ -34,6 +34,7 @@ export class AuthService{
         email
       },
     })
+    
     if (userExists){
       throw new ConflictException("Email already in use")
     }

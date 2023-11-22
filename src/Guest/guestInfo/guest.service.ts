@@ -11,7 +11,7 @@ const guestInfoSelect = {
   id:true,
   name:true,
   email:true,
-  created_at:true
+  created_at:true,
 }
 
 const deleteGuestSelect = {
@@ -34,14 +34,13 @@ export class GuestService{
       },
       select:{
         ...guestInfoSelect
-      }
+      },
     })
 
     return guestInfo
   }
 
   async getGuestReservations(id:number){
-    console.log(id)
     const guestBookings = await this.prismaService.guest.findUnique({
       where:{
         id,
@@ -58,7 +57,7 @@ export class GuestService{
     return guestBookings
   }
 
-  async updateUserInfo({name, email}: UpdateUserInfoParams, guestId: number){
+  async updateGuestInfo({name, email}: UpdateUserInfoParams, guestId: number){
     await this.prismaService.guest.update({
       where:{
         id:guestId
@@ -74,7 +73,7 @@ export class GuestService{
     return updatedInfo
   }
 
-  async DeleteGuestAccount(guestId:number){
+  async deleteGuestAccount(guestId:number){
     await this.prismaService.bookings.deleteMany({
       where:{
         guest_id : guestId

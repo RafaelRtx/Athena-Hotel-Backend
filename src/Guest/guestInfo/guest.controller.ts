@@ -33,7 +33,7 @@ export class GuestController{
   }
 
   @Put()
-  updateUserInfo(
+  updateGuestInfo(
     @Body() body: UpdateUserDto,
     @Guest() guest: GuestInfo
   ){
@@ -42,7 +42,7 @@ export class GuestController{
       throw new UnauthorizedException()
     }
 
-    return this.guestService.updateUserInfo(body, guest.id)
+    return this.guestService.updateGuestInfo(body, guest.id)
   }
 
 
@@ -55,7 +55,7 @@ export class GuestController{
       throw new UnauthorizedException()
     }
 
-    return this.guestService.DeleteGuestAccount(guest.id)
+    return this.guestService.deleteGuestAccount(guest.id)
   }
 
 }

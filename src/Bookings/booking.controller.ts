@@ -29,8 +29,8 @@ export class BookingController{
     @Body() body: CreateBookingDto,
     @Guest() guest: GuestInfo
   ){
-    if (!guest) throw new UnauthorizedException()
-
+    if (guest == null)throw new UnauthorizedException()
+    
     return this.bookingService.createBooking(body , guest.id)
   }
 

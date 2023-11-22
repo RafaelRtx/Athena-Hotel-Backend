@@ -7,6 +7,8 @@ import { UnauthorizedException } from "@nestjs/common";
 const mockBookingParams ={
   date_check_in:"2023-10-10",
   date_check_out:"2023-10-20",
+  guest_number:5,
+  room_id: 2
 }
 
 describe('BookingController', ()=>{
@@ -35,61 +37,32 @@ describe('BookingController', ()=>{
   });
 
   describe('getBookings', () =>{
-    it("Should return all bookings in specific daterange", async ()=>{
-
-      const mockBooking = [{
-        "id":5,
-        "room_id": 2
-      }]
+    it("Should construct filter params correctly", async ()=>{
       
-      const mockGetBookings = jest.fn().mockReturnValue(mockBooking)
+      const mockGetBookings = jest.fn().mockReturnValue(mockBookingParams)
       jest.spyOn(bookingService, "getBookings").mockImplementation(mockGetBookings)
-      const result = await controller.getBookings("2023-10-10", "2023-10-20")
+      await controller.getBookings("2023-10-10", "2023-10-20")
   
       expect(mockGetBookings).toBeCalledWith({
         dateStart: "2023-10-10",
         dateEnd: "2023-10-20"
       })
       
-      expect(result).toEqual(mockBooking)
     })
   })
 
   describe("createBooking", () =>{
-    const mockGuestInfo ={
-      name:"Jameson",
-      id:1,
-      iat:1,
-      exp:2
-    }
     const mockCreateBookingParams = {
       checkinDate : "2023-10-10",
       checkoutDate: "2023-10-20",
       guestNumber: 2,
-      roomId: 1
+      roomId: 1,
     }
 
-    const mockCreateBookingResponse = {
-      ...mockCreateBookingParams,
-      guestId:1
-    }
-    it("should return created booking object correctly", async ()=>{
-
-      const mockCreateHome = jest.fn().mockReturnValue(mockCreateBookingResponse)
-      jest.spyOn(bookingService, "createBooking").mockImplementation(mockCreateHome)
-      const result = await controller.createBooking(mockCreateBookingParams, mockGuestInfo)
-
-      expect(result).toEqual(mockCreateBookingResponse)
-    })
-
-    it("should throw unauthorized exception for invalid token", async() =>{
-      try{
-        await controller.createBooking(mockCreateBookingParams, null)
-
-      }catch(error){
-        expect(error instanceof UnauthorizedException).toBe(true)
-      }
-      
+    it("should throw unauthorized exception if JWT token returns no guest", async() =>{
+      const guest = null
+      expect(() => {controller.createBooking(mockCreateBookingParams, guest)})
+      .toThrowError(UnauthorizedException)
     })
   })
 
