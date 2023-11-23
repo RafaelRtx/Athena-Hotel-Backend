@@ -34,9 +34,9 @@ model Bookings{
   date_check_out   DateTime
   number_of_guests Int
   guest_id         Int          
-  guest            Guest        @relation(fields: [guest_id], references: [id])
+  guest            Guest        @relation(fields: [guest_id], references: [id], onDelete:Cascade)
   room_id          Int
-  room             Room         @relation(fields: [room_id], references: [id]) 
+  room             Room         @relation(fields: [room_id], references: [id], onDelete:Cascade) 
 }
 
 enum RoomType{

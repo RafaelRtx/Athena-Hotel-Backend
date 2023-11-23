@@ -1,4 +1,4 @@
-import { HttpException, Injectable, NotFoundException } from "@nestjs/common";
+import {Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/Prisma/prisma.service";
 import { RoomResponseDto } from "./dto/room.dto";
 
@@ -10,8 +10,7 @@ type GetRoomsParams = {
 const roomSelect = {
   id:true,             
   quantity:true,               
-  price:true ,             
-  bookings:true,         
+  price:true,                    
   roomType:true, 
 }
 
@@ -26,9 +25,6 @@ export class RoomService{
   constructor (private readonly prismaService: PrismaService){}
 
   async getRooms({dateStart, dateEnd} : GetRoomsParams) : Promise<RoomResponseDto[]>{
-    
-
-    const bookingsInSpecificDate = await this.getBookingsInSpecificDate(dateStart, dateEnd)
 
     
     const rooms = await this.prismaService.room.findMany({
@@ -40,17 +36,19 @@ export class RoomService{
       }
     })
 
+    const bookingsInSpecificDate = await this.getBookingsInSpecificDate(dateStart, dateEnd)
+
     if (bookingsInSpecificDate.length == 0){
       return rooms
     }else{
 
       const availableRooms = []
 
-      let i = 0
+      let roomIndex = 0
       rooms.filter((room)=>{
         
-        if (room.id === bookingsInSpecificDate[i][0].room_id){
-          const isFull = bookingsInSpecificDate[i].length < room.quantity ? false : true
+        if (room.id === bookingsInSpecificDate[roomIndex][0].room_id){
+          const isFull = bookingsInSpecificDate[roomIndex].length < room.quantity ? false : true
 
           if (isFull !== true){
             availableRooms.push(room)
@@ -60,8 +58,8 @@ export class RoomService{
           availableRooms.push(room)
         }
 
-        if (i < bookingsInSpecificDate.length-1){
-          i++
+        if (roomIndex < bookingsInSpecificDate.length-1){
+          roomIndex++
         }
       
       })
@@ -78,7 +76,8 @@ export class RoomService{
   async getBookingsInSpecificDate(dateStart: string, dateEnd: string){
     const bookings = await this.prismaService.bookings.findMany({
       select:{
-        ...bookingSelect
+        id:true,
+        room_id:true
       },
       where:{                                   
         date_check_in:{
@@ -103,7 +102,6 @@ export class RoomService{
     })
     arrayBookings.push(filter)
     })
-    console.log(arrayBookings)
 
     return arrayBookings
 
@@ -118,6 +116,7 @@ export class RoomService{
         ...roomSelect
       }
     })
+    console.log(home)
 
     if (!home){
       throw new NotFoundException()

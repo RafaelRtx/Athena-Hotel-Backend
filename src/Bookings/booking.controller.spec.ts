@@ -39,7 +39,7 @@ describe('BookingController', ()=>{
   describe('getBookings', () =>{
     it("Should construct filter params correctly", async ()=>{
       
-      const mockGetBookings = jest.fn().mockReturnValue(mockBookingParams)
+      const mockGetBookings = jest.fn().mockReturnValue([])
       jest.spyOn(bookingService, "getBookings").mockImplementation(mockGetBookings)
       await controller.getBookings("2023-10-10", "2023-10-20")
   

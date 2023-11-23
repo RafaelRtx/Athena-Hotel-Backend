@@ -26,8 +26,10 @@ describe("GuestService", () =>{
             create : jest.fn().mockReturnValue(mockGuest),
             findUnique : jest.fn().mockReturnValue(mockGuest),
             update: jest.fn().mockReturnValue(mockGuest),
-            delete: jest.fn().mockReturnValue(mockGuest),
-            deleteMany: jest.fn().mockReturnValue(mockGuest)
+            delete: jest.fn().mockReturnValue("Account deleted successfully"),
+          },
+          bookings:{
+            deleteMany: jest.fn().mockReturnValue([])
           }
         }
       }, PrismaService
@@ -79,8 +81,6 @@ describe("GuestService", () =>{
       ]
     }
      
-  
-
     it('Should call prisma guest.findUnique with correct params', async () => {
       const mockPrismaFindUniqueBookings = jest.fn().mockReturnValue(mockGuestBookings)
 
@@ -104,6 +104,46 @@ describe("GuestService", () =>{
       jest.spyOn(prismaService.guest, "findUnique").mockImplementation(mockprismaFindUniqueBookings)
 
       await expect(service.getGuestReservations(1)).rejects.toThrowError(NotFoundException)
+
+    })
+  })
+
+  describe("updateGuestInfo", () => {
+    const mockGuestUpdateInfo = {
+      name:"Brigitte",
+      email:"brigitte@outlook.com"
+    }
+
+    it("Should call prisma guest.update with correct params", async () => {
+      const mockPrismaUpdateGuestInfo = jest.fn().mockReturnValue(mockGuestUpdateInfo)
+      jest.spyOn(prismaService.guest, "update").mockImplementation(mockPrismaUpdateGuestInfo)
+
+      await service.updateGuestInfo({name:"Jasmine Crown"}, 1)
+
+      expect(mockPrismaUpdateGuestInfo).toBeCalledWith({
+        where:{
+          id:1
+        },
+        data:{
+          name:"Jasmine Crown",
+          email:undefined
+        }
+      })
+    })
+  })
+
+  describe("deleteGuestAccount", () => {
+    it("Should call prisma guest.delete with correct params", async () => {
+      const mockPrismaDeleteGuest = jest.fn().mockReturnValue([])
+      jest.spyOn(prismaService.guest,"delete").mockImplementation(mockPrismaDeleteGuest)
+
+      await service.deleteGuestAccount(1)
+
+      expect(mockPrismaDeleteGuest).toBeCalledWith({
+        where:{
+          id:1
+        },
+      })
 
     })
   })

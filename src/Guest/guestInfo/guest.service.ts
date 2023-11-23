@@ -14,14 +14,6 @@ const guestInfoSelect = {
   created_at:true,
 }
 
-const deleteGuestSelect = {
-  id:true,
-  name:true,
-  password:true,
-  email:true,
-  created_at:true
-}
-
 
 @Injectable()
 export class GuestService{
@@ -74,21 +66,13 @@ export class GuestService{
   }
 
   async deleteGuestAccount(guestId:number){
-    await this.prismaService.bookings.deleteMany({
-      where:{
-        guest_id : guestId
-      }
-    })
+      await this.prismaService.guest.delete({
+        where:{
+          id:guestId
+        },
+      })
 
-    await this.prismaService.guest.delete({
-      where:{
-        id:guestId
-      },
-      select:{
-        ...deleteGuestSelect
-      }
-    })
-
+ 
     return "Account deleted succesessfully"
   }
 }

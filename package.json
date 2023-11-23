@@ -22,6 +22,7 @@
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^10.2.0",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.4.2",
     "@types/bcryptjs": "^2.4.5",
@@ -63,10 +64,9 @@
       "ts"
     ],
     "rootDir": "./",
-    "modulePaths":[
+    "modulePaths": [
       "<rootDir>"
     ],
-
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

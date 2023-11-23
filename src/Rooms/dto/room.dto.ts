@@ -9,10 +9,7 @@ export class RoomResponseDto{
   quantity: number     
 
   @IsNumber()
-  price: number              
-  
-  @IsArray()
-  bookings: Bookings[]    
+  price: number                 
   
   @IsEnum(RoomType)
   roomType: RoomType
