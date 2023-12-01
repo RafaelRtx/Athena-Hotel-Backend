@@ -7,15 +7,15 @@ import { GuestService } from './guestInfo/guest.service';
 import { JwtModule } from '@nestjs/jwt/dist';
 import { jwtConstants } from './Auth/constants';
 
-
 @Module({
-  imports: [PrismaModule,
+  imports: [
+    PrismaModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret
+      secret: jwtConstants.secret,
     }),
   ],
   controllers: [AuthController, GuestController],
-  providers: [AuthService, GuestService]
+  providers: [AuthService, GuestService],
 })
 export class GuestModule {}

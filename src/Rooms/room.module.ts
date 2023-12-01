@@ -8,5 +8,4 @@ import { RoomService } from './room.service';
   controllers: [RoomController],
   providers: [RoomService],
 })
-
 export class RoomModule {}

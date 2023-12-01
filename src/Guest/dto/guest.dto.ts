@@ -1,74 +1,84 @@
-import {Bookings} from '@prisma/client'
-import { IsString, IsNotEmpty, IsEmail,MinLength, Matches, IsOptional, } from 'class-validator'
-import { ApiProperty } from '@nestjs/swagger'
+import { Bookings } from '@prisma/client';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  MinLength,
+  Matches,
+  IsOptional,
+} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class GuestResponseDto{
-  id: number               
-  name: string             
-  password: string         
-  email: string           
-  bookings?: Bookings[]
-  created_at: Date
-}      
+export class GuestResponseDto {
+  id: number;
+  name: string;
+  password: string;
+  email: string;
+  bookings?: Bookings[];
+  created_at: Date;
+}
 
-export class SignupDto{
+export class SignupDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  name:string;
+  name: string;
 
-  @ApiProperty({example:"email@example.com"})
+  @ApiProperty({ example: 'email@example.com' })
   @IsEmail()
   @IsNotEmpty()
-  email:string;
+  email: string;
 
   @ApiProperty()
-  @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, {message: "Password must have at minimum eight characters, at least one letter and one number:" })
+  @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, {
+    message:
+      'Password must have at minimum eight characters, at least one letter and one number:',
+  })
   @IsString()
   @MinLength(8)
   @IsNotEmpty()
-  password:string
+  password: string;
 }
 
-export class SigninDto{
+export class SigninDto {
   @ApiProperty()
   @IsEmail()
-  email:string;
+  email: string;
 
   @ApiProperty()
   @IsString()
   @MinLength(8)
-  password:string
+  password: string;
 }
 
-export class UpdateUserDto{
+export class UpdateUserDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  name?: string
+  name?: string;
 
-  @ApiProperty({example:"email@example.com"})
+  @ApiProperty({ example: 'email@example.com' })
   @IsEmail()
   @IsString()
   @IsOptional()
-  email?: string
+  email?: string;
 }
 
-export class GuestAccountResponseDto{
+export class GuestAccountResponseDto {
   @ApiProperty()
-  id: number
+  id: number;
 
   @ApiProperty()
-  name: string
+  name: string;
 
-  @ApiProperty({example:"email@example.com"})
-  email: string
-  
+  @ApiProperty({ example: 'email@example.com' })
+  email: string;
+
   @ApiProperty()
-  created_at: Date
-}      
+  created_at: Date;
+}
 
-export class GuestReservationsDto{
-  @ApiProperty({example:[{id:1, room_id:1}]})
-  bookings: Bookings[]
+export class GuestReservationsDto {
+  @ApiProperty({ example: [{ id: 1, room_id: 1 }] })
+  bookings: Bookings[];
 }
