@@ -3,6 +3,8 @@ import { BookingController } from "./booking.controller";
 import { BookingService } from "./booking.service";
 import { PrismaService } from "src/Prisma/prisma.service";
 import { UnauthorizedException } from "@nestjs/common";
+import { AuthGuard } from "src/Guards/auth.guard";
+import { JwtService } from "@nestjs/jwt";
 
 const mockBookingParams ={
   date_check_in:"2023-10-10",
@@ -24,7 +26,7 @@ describe('BookingController', ()=>{
           getBookings : jest.fn().mockReturnValue([]),
           createBooking: jest.fn().mockReturnValue(mockBookingParams)
         }
-      }, PrismaService
+      }, PrismaService, JwtService
     ]
     }).compile()
 

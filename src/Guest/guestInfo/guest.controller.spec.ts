@@ -3,6 +3,7 @@ import { PrismaService } from "src/Prisma/prisma.service";
 import { GuestController } from "./guest.controller";
 import { GuestService } from "./guest.service";
 import { UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 
 
 const mockGuestUpdatedInfo = {
@@ -33,7 +34,7 @@ describe("GuestController", () =>{
           updateGuestInfo: jest.fn().mockReturnValue(mockGuestUpdatedInfo),
           deleteGuestAccount: jest.fn().mockReturnValue("Account deleted succesessfully")
         }
-      }, PrismaService
+      }, PrismaService, JwtService
     ]
     }).compile()
 
@@ -93,8 +94,7 @@ describe("GuestController", () =>{
       const mockUpdateGuestInfo = jest.fn().mockReturnValue([])
       jest.spyOn(guestService, "updateGuestInfo").mockImplementation(mockUpdateGuestInfo)
 
-      const result = await controller.updateGuestInfo(mockUpdateGuestParams, mockGuestInfo)
-      console.log(result)
+      await controller.updateGuestInfo(mockUpdateGuestParams, mockGuestInfo)
 
       expect(mockUpdateGuestInfo).toBeCalledWith(
         {

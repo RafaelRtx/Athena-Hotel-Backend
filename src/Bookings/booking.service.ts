@@ -15,6 +15,8 @@ type CreateBookingParams = {
 }
 
 export const bookingSelect={
+  date_check_in:true,
+  date_check_out:true,
   id: true, 
   room_id:true             
 }
@@ -48,7 +50,7 @@ export class BookingService{
   async createBooking({checkinDate, checkoutDate, guestNumber, roomId,}:CreateBookingParams, guestId:number){
 
     const {bookings, quantity} = await this.getRoomAvailabilityData(roomId, checkinDate, checkoutDate)
-    const isFull = bookings.length == quantity
+    const isFull = bookings.length >= quantity
 
     if (isFull == true){
       throw new HttpException('Sorry this room is full.', 403) // TODO: change this to a more coherent http exception

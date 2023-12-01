@@ -12,6 +12,11 @@ const roomSelect = {
   quantity:true,               
   price:true,                    
   roomType:true, 
+  description:true,
+  size:true,
+  bed_size:true,
+  capacity:true,
+  floor:true, 
 }
 
 const bookingSelect = {
@@ -108,7 +113,7 @@ export class RoomService{
   }
 
   async getRoomById(id:number){
-    const home  = await this.prismaService.room.findUnique({
+    const room  = await this.prismaService.room.findUnique({
       where:{
         id,
       },
@@ -116,12 +121,11 @@ export class RoomService{
         ...roomSelect
       }
     })
-    console.log(home)
 
-    if (!home){
-      throw new NotFoundException()
+    if (!room){
+      throw new NotFoundException("Room not found")
     }
 
-    return home
+    return room
   }
 }
