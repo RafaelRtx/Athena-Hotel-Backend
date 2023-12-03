@@ -1,0 +1,28 @@
+version: '1.0'
+services:         
+  postgres:
+      image: postgres:15.5
+      environment:
+        POSTGRES_USER: myuser
+        POSTGRES_PASSWORD: 102030
+        POSTGRES_DB: athena
+      ports:
+        - 5556:5432
+
+  api:
+    env_file:
+      - .env
+    build: 
+      context: .
+      dockerfile: dockerfile
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/app
+    environment:
+      DATABASE_URL: "postgresql://myuser:102030@host.docker.internal:5556/athena?schema=public"
+      JSON_TOKEN_KEY: ${JSON_TOKEN_KEY}
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: bash -c "npx prisma migrate deploy && npx prisma db seed && npm run start:prod"

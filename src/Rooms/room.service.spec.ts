@@ -34,6 +34,11 @@ const roomSelect = {
   quantity: true,
   price: true,
   roomType: true,
+  description: true,
+  size: true,
+  bed_size: true,
+  capacity: true,
+  floor: true,
 };
 
 describe('RoomService', () => {

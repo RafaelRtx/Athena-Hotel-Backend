@@ -1,4 +1,4 @@
-import { ForbiddenException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/Prisma/prisma.service';
 
 type GetRoomsParams = {
@@ -57,7 +57,7 @@ export class BookingService {
     const isFull = bookings.length >= quantity;
 
     if (isFull == true) {
-      throw new ForbiddenException('Sorry this room is full.'); // TODO: change this to a more coherent http exception
+      throw new HttpException("Sorry, this room is full.", 402); // TODO: change this to a more coherent http exception
     }
 
     return await this.prismaService.bookings.create({

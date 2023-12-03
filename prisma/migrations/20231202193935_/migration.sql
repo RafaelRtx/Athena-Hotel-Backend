@@ -18,6 +18,11 @@ CREATE TABLE "Room" (
     "quantity" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
     "roomType" "RoomType" NOT NULL,
+    "description" TEXT NOT NULL,
+    "size" INTEGER NOT NULL,
+    "bed_size" TEXT NOT NULL,
+    "capacity" INTEGER NOT NULL,
+    "floor" INTEGER NOT NULL,
 
     CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
 );
@@ -39,7 +44,7 @@ CREATE TABLE "Bookings" (
 CREATE UNIQUE INDEX "Guest_email_key" ON "Guest"("email");
 
 -- AddForeignKey
-ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_guest_id_fkey" FOREIGN KEY ("guest_id") REFERENCES "Guest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_guest_id_fkey" FOREIGN KEY ("guest_id") REFERENCES "Guest"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_room_id_fkey" FOREIGN KEY ("room_id") REFERENCES "Room"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_room_id_fkey" FOREIGN KEY ("room_id") REFERENCES "Room"("id") ON DELETE CASCADE ON UPDATE CASCADE;

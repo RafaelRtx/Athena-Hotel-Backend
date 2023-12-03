@@ -79,7 +79,7 @@ export function SwaggerCreateBookingDecorator() {
       type: ErrorResponse,
     }),
     ApiForbiddenResponse({
-      status: 403,
+      status: 402,
       description: 'Sorry, this room is full',
       type: ErrorResponse,
     }),
