@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpCode, Injectable, NotFoundException } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken'
 import { PrismaService } from 'src/Prisma/prisma.service';
 
@@ -77,6 +77,6 @@ export class GuestService {
       },
     });
 
-    return 'Account deleted succesessfully';
+    return HttpCode(204);
   }
 }

@@ -3,15 +3,13 @@ services:
   postgres:
       image: postgres:15.5
       environment:
-        POSTGRES_USER: myuser
+        POSTGRES_USER: postgres
         POSTGRES_PASSWORD: 102030
         POSTGRES_DB: athena
       ports:
-        - 5556:5432
+        - 5555:5432
 
   api:
-    env_file:
-      - .env
     build: 
       context: .
       dockerfile: dockerfile
@@ -20,7 +18,7 @@ services:
     volumes:
       - ./:/app
     environment:
-      DATABASE_URL: "postgresql://myuser:102030@host.docker.internal:5556/athena?schema=public"
+      DATABASE_URL: "${DATABASE_URL}"
       JSON_TOKEN_KEY: ${JSON_TOKEN_KEY}
     ports:
       - "3000:3000"
