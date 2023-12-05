@@ -30,7 +30,7 @@ $ git clone https://github.com/RafaelRtx/Athena-Hotel-Backend
 - acess the project folder:
 
 ```bash
-$ cd athena-hotel
+$ cd Athena-Hotel-Backend
 ```
 - install all dependencies:
 
@@ -47,7 +47,7 @@ JSON_TOKEN_KEY= " " // JWT secret
 
 ```
 - Create prismaORM migrations:
-> This command is going to create all the tables into your postgres database and also seed them with a initial data.
+> This command is going to create all the tables into your postgres database and also seed them with a initial data. database must be active.
 ```bash
 $ npx prisma migrate dev --name init
 ```
