@@ -47,7 +47,7 @@ export class BookingService {
 
   async createBooking(
     { checkinDate, checkoutDate, guestNumber, roomId }: CreateBookingParams,
-    guestId: number,
+    guestId: string,
   ) {
     const { bookings, quantity } = await this.getRoomAvailabilityData(
       roomId,
@@ -57,7 +57,7 @@ export class BookingService {
     const isFull = bookings.length >= quantity;
 
     if (isFull == true) {
-      throw new HttpException("Sorry, this room is full.", 402); // TODO: change this to a more coherent http exception
+      throw new HttpException("Sorry, this room is full.", 402);
     }
 
     return await this.prismaService.bookings.create({

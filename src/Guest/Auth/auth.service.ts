@@ -18,7 +18,7 @@ type SigninParams = {
 export class AuthService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  private generateJWT(name: string, id: number) {
+  private generateJWT(name: string, id: string) {
     return jwt.sign(
       {
         name,

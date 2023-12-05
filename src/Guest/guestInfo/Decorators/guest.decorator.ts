@@ -2,7 +2,7 @@ import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 
 export interface GuestInfo {
   name: string;
-  id: number;
+  id: string;
   iat: number;
   exp: number;
 }

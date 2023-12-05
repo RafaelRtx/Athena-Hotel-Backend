@@ -37,7 +37,7 @@ export class CreateBookingDto {
 }
 
 export class CreateBookingResponseDto {
-  @ApiProperty({ example: 1 })
+  @ApiProperty()
   id: number;
 
   @ApiProperty({ example: '2023-10-15' })
@@ -52,8 +52,8 @@ export class CreateBookingResponseDto {
   @ApiProperty({ example: 3 })
   number_of_guests: number;
 
-  @ApiProperty({ example: 1 })
-  guest_id: number;
+  @ApiProperty()
+  guest_id: string;
 
   @ApiProperty({ example: 1 })
   room_id: number;

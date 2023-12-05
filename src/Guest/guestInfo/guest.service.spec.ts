@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 
 const mockGuest = {
-  id: 1,
+  id: 'UUID',
   name: 'Brigitte',
   email: 'brigitte@outlook.com',
   created_at: '2023-04-01',
@@ -55,11 +55,11 @@ describe('GuestService', () => {
         .spyOn(prismaService.guest, 'findUnique')
         .mockImplementation(mockPrismaFindUniqueGuest);
 
-      await service.getAccountInfo(1);
+      await service.getAccountInfo('UUID');
 
       expect(mockPrismaFindUniqueGuest).toBeCalledWith({
         where: {
-          id: 1,
+          id: expect.any(String),
         },
         select: {
           id: true,
@@ -95,11 +95,11 @@ describe('GuestService', () => {
         .spyOn(prismaService.guest, 'findUnique')
         .mockImplementation(mockPrismaFindUniqueBookings);
 
-      await service.getGuestReservations(1);
+      await service.getGuestReservations('UUID');
 
       expect(mockPrismaFindUniqueBookings).toBeCalledWith({
         where: {
-          id: 1,
+          id: expect.any(String),
         },
         select: {
           bookings: true,
@@ -116,7 +116,7 @@ describe('GuestService', () => {
         .spyOn(prismaService.guest, 'findUnique')
         .mockImplementation(mockprismaFindUniqueBookings);
 
-      await expect(service.getGuestReservations(1)).rejects.toThrowError(
+      await expect(service.getGuestReservations('UUID')).rejects.toThrowError(
         NotFoundException,
       );
     });
@@ -136,11 +136,11 @@ describe('GuestService', () => {
         .spyOn(prismaService.guest, 'update')
         .mockImplementation(mockPrismaUpdateGuestInfo);
 
-      await service.updateGuestInfo({ name: 'Jasmine Crown' }, 1);
+      await service.updateGuestInfo({ name: 'Jasmine Crown' }, 'UUID');
 
       expect(mockPrismaUpdateGuestInfo).toBeCalledWith({
         where: {
-          id: 1,
+          id: expect.any(String),
         },
         data: {
           name: 'Jasmine Crown',
@@ -157,11 +157,11 @@ describe('GuestService', () => {
         .spyOn(prismaService.guest, 'delete')
         .mockImplementation(mockPrismaDeleteGuest);
 
-      await service.deleteGuestAccount(1);
+      await service.deleteGuestAccount('UUID');
 
       expect(mockPrismaDeleteGuest).toBeCalledWith({
         where: {
-          id: 1,
+          id: expect.any(String),
         },
       });
     });

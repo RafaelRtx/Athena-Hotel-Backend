@@ -8,12 +8,12 @@ import { JwtService } from '@nestjs/jwt';
 const mockGuestUpdatedInfo = {
   name: 'Cristina White',
   email: 'cristina@outlook.com',
-  guestId: 1,
+  guestId: 'UUID',
 };
 
 const mockGuestInfo = {
   name: 'Jameson',
-  id: 1,
+  id: 'UUID',
   iat: 1,
   exp: 2,
 };
@@ -52,7 +52,7 @@ describe('GuestController', () => {
 
   describe('getAccountInfo', () => {
     const mockGuestAccInfo = {
-      id: 1,
+      id: 'UUID',
       name: 'Jameson Nakamura',
       email: 'jameson@outlook.com',
       created_at: '2023-04-01',
@@ -117,7 +117,7 @@ describe('GuestController', () => {
           email: 'brigitte@outlook.com',
           name: 'Brigitte',
         },
-        1,
+        'UUID',
       );
     });
   });

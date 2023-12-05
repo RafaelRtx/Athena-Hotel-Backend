@@ -119,13 +119,13 @@ describe('BookingService', () => {
         .spyOn(prismaService.bookings, 'create')
         .mockImplementation(mockCreateBooking);
 
-      await service.createBooking(mockCreateBookingParams, 1);
+      await service.createBooking(mockCreateBookingParams, 'UUID');
 
       expect(mockCreateBooking).toBeCalledWith({
         data: {
           date_check_in: '2023-10-10T00:00:00.000Z',
           date_check_out: '2023-10-20T00:00:00.000Z',
-          guest_id: 1,
+          guest_id: expect.any(String),
           number_of_guests: 2,
           room_id: 1,
         },
@@ -148,7 +148,7 @@ describe('BookingService', () => {
         .mockImplementation(mockGetRoomsFull);
 
       await expect(
-        service.createBooking(mockCreateBookingParams, 1),
+        service.createBooking(mockCreateBookingParams, 'UUID'),
       ).rejects.toThrowError(HttpException);
     });
   });

@@ -19,7 +19,7 @@ export class GuestService {
   constructor(private readonly prismaService: PrismaService) {}
   
 
-  async getAccountInfo(guestId: number) {
+  async getAccountInfo(guestId: string) {
     const guestInfo = await this.prismaService.guest.findUnique({
       where: {
         id: guestId,
@@ -32,7 +32,7 @@ export class GuestService {
     return guestInfo;
   }
 
-  async getGuestReservations(id: number) {
+  async getGuestReservations(id: string) {
     const guestBookings = await this.prismaService.guest.findUnique({
       where: {
         id,
@@ -51,7 +51,7 @@ export class GuestService {
 
   async updateGuestInfo(
     { name, email }: UpdateUserInfoParams,
-    guestId: number,
+    guestId: string,
   ) {
     await this.prismaService.guest.update({
       where: {
@@ -70,13 +70,13 @@ export class GuestService {
     return updatedInfo;
   }
 
-  async deleteGuestAccount(guestId: number) {
+  async deleteGuestAccount(guestId: string) {
     await this.prismaService.guest.delete({
       where: {
         id: guestId,
       },
     });
 
-    return HttpCode(204);
+    return 'Account deleted successfully';
   }
 }

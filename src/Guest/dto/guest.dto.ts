@@ -66,7 +66,7 @@ export class UpdateUserDto {
 
 export class GuestAccountResponseDto {
   @ApiProperty()
-  id: number;
+  id: string;
 
   @ApiProperty()
   name: string;
