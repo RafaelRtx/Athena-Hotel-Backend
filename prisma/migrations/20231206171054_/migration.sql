@@ -3,7 +3,7 @@ CREATE TYPE "RoomType" AS ENUM ('SIMPLE_SINGLE', 'PREMIUM_SINGLE', 'SIMPLE_COUPL
 
 -- CreateTable
 CREATE TABLE "Guest" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE "Bookings" (
     "date_check_in" TIMESTAMP(3) NOT NULL,
     "date_check_out" TIMESTAMP(3) NOT NULL,
     "number_of_guests" INTEGER NOT NULL,
-    "guest_id" INTEGER NOT NULL,
+    "guest_id" TEXT NOT NULL,
     "room_id" INTEGER NOT NULL,
 
     CONSTRAINT "Bookings_pkey" PRIMARY KEY ("id")
