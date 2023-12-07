@@ -30,6 +30,20 @@ $ docker compose up
 $ docker compose start
 ```
 
+## Database initial data:
+- The postgres database is going to create the following data automatically during first execution:
+> These sample data represents all the rooms available and it will help application to work properly. you can customize it by yourself.
+<h3>Room</h3>
+
+| id | quantity | price | bookings | roomType | description | size | bed_size | capacity | floor |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 3 | 4,000 | [0] | SIMPLE_SINGLE | Room description | 70 | 120x200 | 2 | 2 |
+| 2 | 3 | 4,500 | [0] | PREMIUM_SINGLE | Room description | 70 | 120x200 | 2 | 2 |
+| 3 | 3 | 5,500 | [0] | SIMPLE_COUPLE | Room description | 70 | 160x240 | 2 | 2 |
+| 4 | 3 | 6,500 | [0] | PREMIUM_COUPLE | Room description | 90 | 160x240 | 2 | 2 |
+
+#
+
 
 
 
