@@ -37,6 +37,10 @@ export class RoomController {
       );
     }
 
+    if (checkinDate < new Date(Date.now()).toISOString().split('T')[0]){
+      throw new HttpException('The checkin date is not valid.', 400)
+    }
+
     const filters = {
       dateStart: checkinDate,
       dateEnd: checkoutDate,
