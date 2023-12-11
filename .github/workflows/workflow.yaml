@@ -6,12 +6,28 @@ env:
   DATABASE_URL: postgresql://postgres:102030@host.docker.internal:5555/athena?schema=public
 
 jobs:
-  continous-integration:
+  docker:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/build
-      - uses: ./.github/actions/docker-compose
-      - name: Run tests
-        run: npm run test
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Start containers
+      run: docker-compose -f "docker-compose.yml" up -d --build
+
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm run test
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
