@@ -1,33 +1,29 @@
-name: Continous Intergration
+name: Continous Integration
 
-on: [pull_request, push]
-
-env:
-  DATABASE_URL: postgresql://postgres:102030@host.docker.internal:5555/athena?schema=public
+on: [push, pull_request]
 
 jobs:
-  docker:
-    timeout-minutes: 10
+  continous-integration:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Start containers
-      run: docker-compose -f "docker-compose.yml" up -d --build
-
-    - name: Install node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run tests
-      run: npm run test
-
-    - name: Stop containers
-      if: always()
-      run: docker-compose -f "docker-compose.yml" down
+      - uses: actions/checkout@v3
+      - name: Using node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+      - name: run install, build and test
+        run: |
+          npm install
+          npx prisma generate
+          # Configurar banco de dados PostgreSQL
+          uses: actions/setup-database@v1
+          with:
+            database: my-database
+            user: my-user
+            password: my-password
+            engine: postgres
+            createDatabase: true
+          npx prisma migrate dev
+          npm run test
+          npm run build
