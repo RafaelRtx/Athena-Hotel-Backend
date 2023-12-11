@@ -30,15 +30,13 @@ export class RoomController {
     @Query('checkinDate') checkinDate: string,
     @Query('checkoutDate') checkoutDate: string,
   ): Promise<RoomResponseDto[]> {
-    if (!checkinDate || !checkoutDate) {
+    const invalidDate = checkinDate < new Date(Date.now()).toISOString().split('T')[0]
+
+    if (!checkinDate || !checkoutDate || invalidDate) {
       throw new HttpException(
-        'Both Checkin and Checkout fields must be filled',
+        'Invalid date provided',
         400,
       );
-    }
-
-    if (checkinDate < new Date(Date.now()).toISOString().split('T')[0]){
-      throw new HttpException('The checkin date is not valid.', 400)
     }
 
     const filters = {

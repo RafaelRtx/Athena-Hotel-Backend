@@ -34,11 +34,11 @@ describe('RoomController', () => {
     it('Should construct getRooms filter correctly', async () => {
       const mockGetRooms = jest.fn().mockReturnValue([]);
       jest.spyOn(roomService, 'getRooms').mockImplementation(mockGetRooms);
-      await controller.getRooms('2023-10-10', '2023-10-15');
+      await controller.getRooms('2025-10-10', '2025-10-15');
 
       expect(mockGetRooms).toBeCalledWith({
-        dateStart: '2023-10-10',
-        dateEnd: '2023-10-15',
+        dateStart: '2025-10-10',
+        dateEnd: '2025-10-15',
       });
     });
   });

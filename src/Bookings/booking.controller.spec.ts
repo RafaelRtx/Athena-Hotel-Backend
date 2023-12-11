@@ -46,11 +46,11 @@ describe('BookingController', () => {
       jest
         .spyOn(bookingService, 'getBookings')
         .mockImplementation(mockGetBookings);
-      await controller.getBookings('2023-10-10', '2023-10-20');
+      await controller.getBookings('2025-10-10', '2025-10-20');
 
       expect(mockGetBookings).toBeCalledWith({
-        dateStart: '2023-10-10',
-        dateEnd: '2023-10-20',
+        dateStart: '2025-10-10',
+        dateEnd: '2025-10-20',
       });
     });
   });
