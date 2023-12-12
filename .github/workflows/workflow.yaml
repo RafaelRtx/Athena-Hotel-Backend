@@ -2,10 +2,6 @@ name: Continous Integration
 
 on: [push, pull_request]
 
-env:
-  DB_HOST: localhost
-  DB_USERNAME: postgres
-  DB_PASSWORD: postgres
 
 jobs:
   continous-integration:
@@ -15,11 +11,9 @@ jobs:
       postgres:
         image: postgres:15.5
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 102030
-          POSTGRES_DB: athena
+          POSTGRES_PASSWORD: postgres
         ports:
-          - 5555:5432
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -33,9 +27,22 @@ jobs:
         with:
           node-version: 18.x
       - name: run install, build and test
-        run: |
-          npm install
-          npx prisma generate
-          npx prisma migrate deploy
-          npm run test
-          npm run build
+        run: npm install
+
+      - name: Connect to postgreSQL
+        run: node client.js
+        env:
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
+      
+      - name: run prisma generate
+        run: npx prisma generate  
+
+      - name: run prisma migrations
+        run: npx prisma migrate deploy
+
+      - name: run tests
+        run: npm run test
+
+      - name: run build
+        run: npm run build
