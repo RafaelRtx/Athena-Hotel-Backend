@@ -11,7 +11,9 @@ jobs:
       postgres:
         image: postgres:15.5
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 102030
+          POSTGRES_DB: athena
         ports:
           - 5432:5432
         options: >-
@@ -35,7 +37,7 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: 102030
           POSTGRES_DB: athena
       
       - name: run prisma generate
