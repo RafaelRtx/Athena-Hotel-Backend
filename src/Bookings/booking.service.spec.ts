@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BookingService, bookingSelect } from './booking.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/Prisma/prisma.service';
 import { HttpException, NotFoundException } from '@nestjs/common';
 
 const mockGetBookings = [
