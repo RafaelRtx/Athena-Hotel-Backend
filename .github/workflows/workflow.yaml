@@ -2,28 +2,40 @@ name: Continous Integration
 
 on: [push, pull_request]
 
+env:
+  DB_HOST: localhost
+  DB_USERNAME: postgres
+  DB_PASSWORD: postgres
+
 jobs:
   continous-integration:
     runs-on: ubuntu-latest
 
+    services:         
+      postgres:
+        image: postgres:15.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 102030
+          POSTGRES_DB: athena
+        ports:
+          - 5555:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v3
       - name: Using node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
       - name: run install, build and test
         run: |
           npm install
           npx prisma generate
-          # Configurar banco de dados PostgreSQL
-          uses: actions/setup-database@v1
-          with:
-            database: my-database
-            user: my-user
-            password: my-password
-            engine: postgres
-            createDatabase: true
-          npx prisma migrate dev
+          npx prisma migrate deploy
           npm run test
           npm run build
