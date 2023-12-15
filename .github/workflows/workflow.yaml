@@ -37,12 +37,12 @@ jobs:
       - name: run prisma migrations
         run: npx prisma migrate dev
         env: 
-          DATABASE_URL: postgresql://postgres:102030@localhost:5432/athena?schema=public
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
 
       - name: run tests
         run: npm run test
         env: 
-          JSON_TOKEN_KEY: "${JSON_TOKEN_KEY}"
+          JSON_TOKEN_KEY: "${{secrets.JSON_TOKEN_KEY}}"
 
       - name: run build
         run: npm run build
