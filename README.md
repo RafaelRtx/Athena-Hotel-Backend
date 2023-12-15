@@ -37,14 +37,11 @@ $ docker compose start
 
 | id | quantity | price | bookings | roomType | description | size | bed_size | capacity | floor |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | 3 | 4,000 | [0] | SIMPLE_SINGLE | Room description | 70 | 120x200 | 2 | 2 |
-| 2 | 3 | 4,500 | [0] | PREMIUM_SINGLE | Room description | 70 | 120x200 | 2 | 2 |
-| 3 | 3 | 5,500 | [0] | SIMPLE_COUPLE | Room description | 70 | 160x240 | 2 | 2 |
-| 4 | 3 | 6,500 | [0] | PREMIUM_COUPLE | Room description | 90 | 160x240 | 2 | 2 |
+| 1 | 3 | 4,000 | [0] | SIMPLE_SINGLE | Room desc. | 70 | 120x200 | 2 | 2 |
+| 2 | 3 | 4,500 | [0] | PREMIUM_SINGLE | Room desc. | 70 | 120x200 | 2 | 2 |
+| 3 | 3 | 5,500 | [0] | SIMPLE_COUPLE | Room desc. | 70 | 160x240 | 2 | 2 |
+| 4 | 3 | 6,500 | [0] | PREMIUM_COUPLE | Room desc. | 90 | 160x240 | 2 | 2 |
+
+> The database is also setted to delete all bookings within 2 minutes when the room reaches maximum capacity.
 
 #
-
-
-
-
-
