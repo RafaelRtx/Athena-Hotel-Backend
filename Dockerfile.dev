@@ -4,13 +4,12 @@ WORKDIR /app
 
 COPY . .
 
+ENV DATABASE_URL=${DATABASE_URL}
+ENV JSON_TOKEN_KEY=${JSON_TOKEN_KEY}
+
 RUN npm install
 
 RUN npx prisma generate
-
-RUN npx prisma migrate deploy
-
-RUN npx prisma db seed
 
 RUN npm run build
 
