@@ -4,7 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN --mount=type=secret,id=JSON_TOKEN_KEY \
+    JSON_TOKEN_KEY="$(cat /run/secrets/JSON_TOKEN_KEY)" npm install
+
+ENV JSON_TOKEN_KEY="$(cat /run/secrets/JSON_TOKEN_KEY)"
 
 RUN npx prisma generate
 
@@ -14,8 +17,7 @@ RUN --mount=type=secret,id=DATABASE_URL \
 RUN --mount=type=secret,id=DATABASE_URL \
     DATABASE_URL="$(cat /run/secrets/DATABASE_URL)" npx prisma db seed
 
-RUN --mount=type=secret,id=JSON_TOKEN_KEY \
-    JSON_TOKEN_KEY="$(cat /run/secrets/JSON_TOKEN_KEY)" npm run build
+RUN npm run build
 
 EXPOSE 3000
 
