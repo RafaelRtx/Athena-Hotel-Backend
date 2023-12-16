@@ -8,11 +8,14 @@ RUN npm install
 
 RUN npx prisma generate
 
-RUN npx prisma migrate deploy
+RUN --mount=type=secret,id=DATABASE_URL \
+    DATABASE_URL="$(cat /run/secrets/DATABASE_URL)" npx prisma migrate deploy
 
-RUN npx prisma db seed
+RUN --mount=type=secret,id=DATABASE_URL \
+    DATABASE_URL="$(cat /run/secrets/DATABASE_URL)" npx prisma db seed
 
-RUN npm run build
+RUN --mount=type=secret,id=JSON_TOKEN_KEY \
+    JSON_TOKEN_KEY="$(cat /run/secrets/JSON_TOKEN_KEY)" npm run build
 
 EXPOSE 3000
 

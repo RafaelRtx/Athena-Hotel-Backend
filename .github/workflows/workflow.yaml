@@ -42,7 +42,16 @@ jobs:
       - name: run tests
         run: npm run test
         env: 
-          JSON_TOKEN_KEY: "${{secrets.JSON_TOKEN_KEY}}"
-
+          JSON_TOKEN_KEY: ${{secrets.JSON_TOKEN_KEY}}
       - name: run build
         run: npm run build
+
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only --build-secret "DATABASE_URL=${{secrets.FLY_DATABASE_URL}} JSON_TOKEN_KEY=${{secrets.JSON_TOKEN_KEY}}"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
