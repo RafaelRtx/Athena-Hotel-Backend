@@ -12,7 +12,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import {
   SwaggerGetRoomByIdDecorator,
   SwaggerGetRoomsDecorator,
-} from './Decorators/controller.decorators';
+} from './Decorators/controller.decorators';;
 
 @ApiTags('rooms')
 @Controller('room')
@@ -31,11 +31,11 @@ export class RoomController {
     @Query('checkoutDate') checkoutDate: string,
   ): Promise<RoomResponseDto[]> {
     const currentDate = new Date(Date.now()).toISOString().split('T')[0]
-    const invalidDate = checkinDate < currentDate || checkoutDate < currentDate
+    const invalidDatePeriod = checkinDate < currentDate || checkoutDate < currentDate
 
-    if (!checkinDate || !checkoutDate || invalidDate) {
+    if (!checkinDate || !checkoutDate || invalidDatePeriod) {
       throw new HttpException(
-        'Invalid date',
+        'The date is not valid',
         400,
       );
     }

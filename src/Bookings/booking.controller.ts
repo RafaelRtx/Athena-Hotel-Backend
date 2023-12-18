@@ -42,11 +42,11 @@ export class BookingController {
     @Query('checkoutDate') checkoutDate: string,
   ): Promise<BookingResponseDto[]> {
     const currentDate = new Date(Date.now()).toISOString().split('T')[0]
-    const invalidDate = checkinDate < currentDate || checkoutDate < currentDate
+    const invalidDatePeriod = checkinDate < currentDate || checkoutDate < currentDate
 
-    if (!checkinDate || !checkoutDate || invalidDate) {
+    if (!checkinDate || !checkoutDate || invalidDatePeriod) {
       throw new HttpException(
-        'Invalid date',
+        'The date is not valid',
         400,
       );
     }
