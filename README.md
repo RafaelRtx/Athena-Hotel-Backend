@@ -16,7 +16,7 @@ Athena Hotel Api documentation is available in **SwaggerHub**: [https://app.swag
 ```ts
 
 DATABASE_PASSWORD= " " // your db password
-DATABASE_URL= "postgresql://postgres:${DATABASE_PASSWORD}@host.docker.internal:5433/postgres?schema=public" // "postgres" is the default database username, and so is the port 5432.
+DATABASE_URL= "postgresql://postgres:${DATABASE_PASSWORD}@172.17.0.1:5433/postgres?schema=public" // "postgres" is the default database username, and so is the port 5432.
 JSON_TOKEN_KEY= " " // JWT secret
 
 ```
