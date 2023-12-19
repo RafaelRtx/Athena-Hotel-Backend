@@ -2,6 +2,7 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { RoomController } from './room.controller';
 import { RoomService } from './room.service';
 import { PrismaService } from 'src/Prisma/prisma.service';
+import { HttpException } from '@nestjs/common';
 
 describe('RoomController', () => {
   let controller: RoomController;
@@ -41,5 +42,15 @@ describe('RoomController', () => {
         dateEnd: '2025-10-15',
       });
     });
+
+    it ('Should throw http exception exception if provided date is not valid or not provided', async ()=>{
+      expect(() =>{
+        controller.getRooms('2023-10-18', null)
+      }).toThrowError(HttpException)
+
+      expect(() =>{
+        controller.getRooms('2023-10-18', '2023-10-20')
+      }).toThrowError(HttpException)
+    })
   });
 });

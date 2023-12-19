@@ -2,14 +2,14 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { BookingController } from './booking.controller';
 import { BookingService } from './booking.service';
 import { PrismaService } from 'src/Prisma/prisma.service';
-import { UnauthorizedException } from '@nestjs/common';
+import { HttpException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 const mockBookingParams = {
-  date_check_in: '2023-10-10',
-  date_check_out: '2023-10-20',
-  guest_number: 5,
-  room_id: 2,
+  checkinDate: '2023-10-10',
+  checkoutDate: '2023-10-20',
+  guestNumber: 2,
+  roomId: 1,
 };
 
 describe('BookingController', () => {
@@ -53,20 +53,23 @@ describe('BookingController', () => {
         dateEnd: '2025-10-20',
       });
     });
+
+    it ('Should throw http exception exception if provided date is not valid or not provided', async ()=>{
+      expect(() =>{
+        controller.getBookings('2023-10-18', null)
+      }).toThrowError(HttpException)
+
+      expect(() =>{
+        controller.getBookings('2023-10-18', '2023-10-20')
+      }).toThrowError(HttpException)
+    })
   });
 
   describe('createBooking', () => {
-    const mockCreateBookingParams = {
-      checkinDate: '2023-10-10',
-      checkoutDate: '2023-10-20',
-      guestNumber: 2,
-      roomId: 1,
-    };
-
     it('should throw unauthorized exception if JWT token returns no guest', async () => {
-      const guest = null;
+      const noGuest = null;
       expect(() => {
-        controller.createBooking(mockCreateBookingParams, guest);
+        controller.createBooking(mockBookingParams, noGuest);
       }).toThrowError(UnauthorizedException);
     });
   });
