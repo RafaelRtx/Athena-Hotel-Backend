@@ -5,6 +5,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { applyDecorators } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
@@ -49,7 +50,7 @@ export function SwaggerGetBookingsDecorator() {
       type: BookingResponseDto,
     }),
     ApiNotFoundResponse({
-      status: 401,
+      status: 404,
       description: 'No bookings found in specified date',
       type: ErrorResponse,
     }),
@@ -73,16 +74,19 @@ export function SwaggerCreateBookingDecorator() {
       description: 'Return Room by id',
       type: CreateBookingResponseDto,
     }),
-    ApiNotFoundResponse({
-      status: 401,
-      description: 'Room not found',
-      type: ErrorResponse,
-    }),
-    ApiForbiddenResponse({
-      status: 402,
+    
+    ApiBadRequestResponse({
+      status: 400,
       description: 'Sorry, this room is full',
       type: ErrorResponse,
     }),
+
+    ApiUnauthorizedResponse({
+      status: 401,
+      description: 'Unauthorized',
+      type: ErrorResponse,
+    }),
+
     ApiInternalServerErrorResponse({
       status: 500,
       description: 'Internal server error',

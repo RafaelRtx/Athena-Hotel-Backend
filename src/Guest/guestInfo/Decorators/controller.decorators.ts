@@ -107,7 +107,7 @@ export function SwaggerDeleteGuestDecorator() {
       type: ErrorResponse,
     }),
     ApiOkResponse({
-      status: 204,
+      status: 200,
       description: 'Delete guest account',
       type: DeletedResponse,
     }),
