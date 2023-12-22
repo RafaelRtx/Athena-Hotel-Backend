@@ -58,7 +58,7 @@ export class BookingService {
 
     if (isFull == true) {
       this.deleteGuestBookingsTimer(guestId)
-      throw new HttpException("Sorry, this room is full.", 402);
+      throw new HttpException("Sorry, this room is full.", 400);
     }
 
     return await this.prismaService.bookings.create({
