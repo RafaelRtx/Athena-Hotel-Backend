@@ -62,7 +62,6 @@ describe('GuestService', () => {
           id: expect.any(String),
         },
         select: {
-          id: true,
           name: true,
           email: true,
           created_at: true,

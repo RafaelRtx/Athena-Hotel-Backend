@@ -8,7 +8,6 @@ type UpdateUserInfoParams = {
 };
 
 const guestInfoSelect = {
-  id: true,
   name: true,
   email: true,
   created_at: true,
@@ -17,7 +16,6 @@ const guestInfoSelect = {
 @Injectable()
 export class GuestService {
   constructor(private readonly prismaService: PrismaService) {}
-  
 
   async getAccountInfo(guestId: string) {
     const guestInfo = await this.prismaService.guest.findUnique({

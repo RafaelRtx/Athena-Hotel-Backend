@@ -9,15 +9,6 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GuestResponseDto {
-  id: number;
-  name: string;
-  password: string;
-  email: string;
-  bookings?: Bookings[];
-  created_at: Date;
-}
-
 export class SignupDto {
   @ApiProperty()
   @IsString()
@@ -65,8 +56,6 @@ export class UpdateUserDto {
 }
 
 export class GuestAccountResponseDto {
-  @ApiProperty()
-  id: string;
 
   @ApiProperty()
   name: string;
