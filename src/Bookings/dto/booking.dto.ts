@@ -1,10 +1,14 @@
 import {
+  IsDate,
   IsDateString,
   IsNotEmpty,
   IsNumber,
   IsPositive,
+  MaxDate,
+  MinDate,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class BookingResponseDto {
   @ApiProperty()
@@ -14,15 +18,21 @@ export class BookingResponseDto {
   room_id: number;
 }
 
+const date = new Date(Date.now())
+
 export class CreateBookingDto {
   @ApiProperty({ example: '2023-10-20' })
-  @IsDateString()
+  @IsDate()
   @IsNotEmpty()
+  @Type(()=> Date)
+  @MinDate(new Date(date.getTime() - 86400000))
   checkinDate: string;
 
   @ApiProperty({ example: '2023-10-25' })
-  @IsDateString()
+  @IsDate()
   @IsNotEmpty()
+  @Type(()=> Date)
+  @MinDate(new Date(Date.now()))
   checkoutDate: string;
 
   @ApiProperty({ example: 3 })
