@@ -1,10 +1,8 @@
 import {
   IsDate,
-  IsDateString,
   IsNotEmpty,
   IsNumber,
   IsPositive,
-  MaxDate,
   MinDate,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
@@ -16,6 +14,12 @@ export class BookingResponseDto {
 
   @ApiProperty()
   room_id: number;
+
+  @ApiProperty()
+  date_check_in: Date;
+
+  @ApiProperty()
+  date_check_out: Date;
 }
 
 const date = new Date(Date.now())

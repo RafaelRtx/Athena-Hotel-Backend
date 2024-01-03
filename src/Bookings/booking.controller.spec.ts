@@ -54,13 +54,9 @@ describe('BookingController', () => {
       });
     });
 
-    it ('Should throw http exception exception if provided date is not valid or not provided', async ()=>{
+    it ('Should throw http exception exception if date is not provided', async ()=>{
       expect(() =>{
         controller.getBookings('2023-10-18', null)
-      }).toThrowError(HttpException)
-
-      expect(() =>{
-        controller.getBookings('2023-10-18', '2023-10-20')
       }).toThrowError(HttpException)
     })
   });
