@@ -27,17 +27,16 @@ export class RoomController {
   @SwaggerGetRoomsDecorator()
   @Get()
   getRooms(
-    @Query('checkinDate') checkinDate: string,
-    @Query('checkoutDate') checkoutDate: string,
+    @Query('checkinDate') checkinDate?: string,
+    @Query('checkoutDate') checkoutDate?: string,
   ): Promise<RoomResponseDto[]> {
-    const currentDate = new Date(Date.now()).toISOString().split('T')[0]
-    const invalidDatePeriod = checkinDate < currentDate || checkoutDate < currentDate
 
-    if (!checkinDate || !checkoutDate || invalidDatePeriod) {
-      throw new HttpException(
-        'The date is not valid',
-        400,
-      );
+    if (!checkinDate && checkoutDate){
+      throw new HttpException('Checkin date is missing', 400)
+    }
+
+    if (checkinDate && !checkoutDate){
+      throw new HttpException('Checkout date is missing', 400)
     }
 
     const filters = {

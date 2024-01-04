@@ -43,13 +43,9 @@ describe('RoomController', () => {
       });
     });
 
-    it ('Should throw http exception exception if provided date is not valid or not provided', async ()=>{
+    it ('Should throw http exception exception only 1 query param is provided, intead of 2.', async ()=>{
       expect(() =>{
         controller.getRooms('2023-10-18', null)
-      }).toThrowError(HttpException)
-
-      expect(() =>{
-        controller.getRooms('2023-10-18', '2023-10-20')
       }).toThrowError(HttpException)
     })
   });

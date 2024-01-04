@@ -41,6 +41,10 @@ export class RoomService {
       },
     });
 
+    if (!dateStart && !dateEnd){
+      return rooms
+    }
+
     const bookingsInSpecificDate = await this.getBookingsInSpecificDate(
       dateStart,
       dateEnd,
