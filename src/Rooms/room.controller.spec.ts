@@ -43,10 +43,10 @@ describe('RoomController', () => {
       });
     });
 
-    it ('Should throw http exception exception only 1 query param is provided, intead of 2.', async ()=>{
-      expect(() =>{
-        controller.getRooms('2023-10-18', null)
-      }).toThrowError(HttpException)
-    })
+    it('Should throw http exception exception only 1 query param is provided, intead of 2.', async () => {
+      expect(() => {
+        controller.getRooms('2023-10-18', null);
+      }).toThrowError(HttpException);
+    });
   });
 });

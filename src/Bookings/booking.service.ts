@@ -57,8 +57,8 @@ export class BookingService {
     const isFull = bookings.length >= quantity;
 
     if (isFull == true) {
-      this.deleteGuestBookingsTimer(guestId)
-      throw new HttpException("Sorry, this room is full.", 400);
+      this.deleteGuestBookingsTimer(guestId);
+      throw new HttpException('Sorry, this room is full.', 400);
     }
 
     return await this.prismaService.bookings.create({
@@ -102,14 +102,14 @@ export class BookingService {
     return roomAvailabilityData;
   }
 
-  async deleteGuestBookingsTimer(id:string){
-      setTimeout(async ()=>{
-        await this.prismaService.bookings.deleteMany({
-          where:{
-            guest_id:id
-          }
-        })
-    }, 120000)
-    clearTimeout
+  async deleteGuestBookingsTimer(id: string) {
+    setTimeout(async () => {
+      await this.prismaService.bookings.deleteMany({
+        where: {
+          guest_id: id,
+        },
+      });
+    }, 120000);
+    clearTimeout;
   }
 }

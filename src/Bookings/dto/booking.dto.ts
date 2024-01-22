@@ -22,21 +22,21 @@ export class BookingResponseDto {
   date_check_out: Date;
 }
 
-const date = new Date(Date.now())
+const date = new Date(Date.now());
 
 export class CreateBookingDto {
   @ApiProperty({ example: '2023-10-20' })
   @IsDate()
   @IsNotEmpty()
-  @Type(()=> Date)
+  @Type(() => Date)
   @MinDate(new Date(date.getTime() - 86400000))
   checkinDate: string;
 
   @ApiProperty({ example: '2023-10-25' })
   @IsDate()
   @IsNotEmpty()
-  @Type(()=> Date)
-  @MinDate(new Date(Date.now()))
+  @Type(() => Date)
+  @MinDate(new Date(date))
   checkoutDate: string;
 
   @ApiProperty({ example: 3 })

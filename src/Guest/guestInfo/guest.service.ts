@@ -1,5 +1,5 @@
 import { HttpCode, Injectable, NotFoundException } from '@nestjs/common';
-import * as jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken';
 import { PrismaService } from 'src/Prisma/prisma.service';
 
 type UpdateUserInfoParams = {
@@ -61,7 +61,7 @@ export class GuestService {
       },
     });
 
-    jwt.sign
+    jwt.sign;
 
     const updatedInfo = { name, email };
 

@@ -54,11 +54,11 @@ describe('BookingController', () => {
       });
     });
 
-    it ('Should throw http exception exception if date is not provided', async ()=>{
-      expect(() =>{
-        controller.getBookings('2023-10-18', null)
-      }).toThrowError(HttpException)
-    })
+    it('Should throw http exception exception if date is not provided', async () => {
+      expect(() => {
+        controller.getBookings('2023-10-18', null);
+      }).toThrowError(HttpException);
+    });
   });
 
   describe('createBooking', () => {
@@ -67,6 +67,25 @@ describe('BookingController', () => {
       expect(() => {
         controller.createBooking(mockBookingParams, noGuest);
       }).toThrowError(UnauthorizedException);
+    });
+
+    it('should throw HTTP exception if checkout date is lower than checkin date', async () => {
+      const mockInvalidDate = {
+        checkinDate: '2023-10-20',
+        checkoutDate: '2023-10-18',
+        guestNumber: 2,
+        roomId: 1,
+      };
+      const mockGuestInfo = {
+        name: 'Jameson',
+        id: 'UUID',
+        iat: 1,
+        exp: 2,
+      };
+
+      expect(() => {
+        controller.createBooking(mockInvalidDate, mockGuestInfo);
+      }).toThrowError(HttpException);
     });
   });
 });

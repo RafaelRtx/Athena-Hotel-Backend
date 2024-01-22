@@ -5,12 +5,11 @@ on:
     branches:
       - master
 
-
 jobs:
   continous-integration:
     runs-on: ubuntu-latest
 
-    services:         
+    services:
       postgres:
         image: postgres:15.5
         env:
@@ -33,18 +32,18 @@ jobs:
           node-version: 18.x
       - name: run install, build and test
         run: npm install
-      
+
       - name: run prisma generate
-        run: npx prisma generate  
+        run: npx prisma generate
 
       - name: run prisma migrations
         run: npx prisma migrate dev
-        env: 
+        env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
 
       - name: run tests
         run: npm run test
-        env: 
+        env:
           JSON_TOKEN_KEY: ${{secrets.JSON_TOKEN_KEY}}
       - name: run build
         run: npm run build

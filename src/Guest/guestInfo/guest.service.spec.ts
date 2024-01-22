@@ -1,9 +1,7 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { PrismaService } from 'src/Prisma/prisma.service';
 import { GuestService } from './guest.service';
-import {
-  NotFoundException,
-} from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 
 const mockGuest = {
   id: 'UUID',

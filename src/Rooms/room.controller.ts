@@ -12,7 +12,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import {
   SwaggerGetRoomByIdDecorator,
   SwaggerGetRoomsDecorator,
-} from './Decorators/controller.decorators';;
+} from './Decorators/controller.decorators';
 
 @ApiTags('rooms')
 @Controller('room')
@@ -30,13 +30,12 @@ export class RoomController {
     @Query('checkinDate') checkinDate?: string,
     @Query('checkoutDate') checkoutDate?: string,
   ): Promise<RoomResponseDto[]> {
-
-    if (!checkinDate && checkoutDate){
-      throw new HttpException('Checkin date is missing', 400)
+    if (!checkinDate && checkoutDate) {
+      throw new HttpException('Checkin date is missing', 400);
     }
 
-    if (checkinDate && !checkoutDate){
-      throw new HttpException('Checkout date is missing', 400)
+    if (checkinDate && !checkoutDate) {
+      throw new HttpException('Checkout date is missing', 400);
     }
 
     const filters = {

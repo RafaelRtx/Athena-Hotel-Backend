@@ -74,7 +74,7 @@ export function SwaggerCreateBookingDecorator() {
       description: 'Return Room by id',
       type: CreateBookingResponseDto,
     }),
-    
+
     ApiBadRequestResponse({
       status: 400,
       description: 'Sorry, this room is full',

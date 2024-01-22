@@ -15,11 +15,7 @@ import {
   UpdateUserDto,
 } from '../dto/guest.dto';
 import { AuthGuard } from 'src/Guards/auth.guard';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   SwaggerDeleteGuestDecorator,
   SwaggerEditGuestDecorator,
