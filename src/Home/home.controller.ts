@@ -9,7 +9,7 @@ export class HomeController {
     description: 'Return the Home page',
   })
   @Get()
-  getRooms(): string {
+  getHome(): string {
     return 'Welcome to Athena Hotel API! This page is static.';
   }
 }
