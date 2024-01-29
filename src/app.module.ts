@@ -7,9 +7,10 @@ import { BookingModule } from './Bookings/booking.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GuestInterceptor } from './Guest/Interceptors/guest.interceptor';
 import { RoomModule } from './Rooms/room.module';
+import { HomeModule } from './Home/home.module';
 
 @Module({
-  imports: [GuestModule, PrismaModule, BookingModule, RoomModule],
+  imports: [GuestModule, PrismaModule, BookingModule, RoomModule, HomeModule],
   controllers: [AppController],
   providers: [
     AppService,
