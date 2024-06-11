@@ -29,6 +29,6 @@ async function bootstrap() {
   const fs = require('node:fs');
   fs.writeFileSync('./swagger-spec.json', JSON.stringify(document));
 
-  await app.listen(3000);
+  await app.listen(8080);
 }
 bootstrap();
