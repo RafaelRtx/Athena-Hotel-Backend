@@ -26,7 +26,7 @@ export class AuthService {
       },
       process.env.JSON_TOKEN_KEY,
       {
-        expiresIn: 36000,
+        expiresIn: 360000,
       },
     );
   }
